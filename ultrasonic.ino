@@ -1,0 +1,33 @@
+// Define pins for the ultrasonic sensor
+const int trigPin = 2;
+const int echoPin = 3;
+
+void setup() {
+  Serial.begin(9600); // Initialize serial communication
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+
+void loop() {
+  // Trigger a pulse to the ultrasonic sensor
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Measure the duration of the pulse from the echo pin
+  long duration = pulseIn(echoPin, HIGH);
+
+  // Calculate the distance in centimeters
+  // (Speed of sound is approximately 343 meters/second or 29 microseconds per centimeter)
+  float distance_cm = (duration / 2) * 0.0343;
+
+  // Print the distance to the serial monitor
+  Serial.print("Distance: ");
+  Serial.print(distance_cm);
+  Serial.println(" cm");
+
+  // Add a delay before taking the next reading
+  delay(1000); // Adjust the delay as needed
+}
